@@ -1,0 +1,50 @@
+#+title: Android got 403 from wamp server
+#+options: ^:nil
+
+* environment
+Android request method: POST
+Server: Wamp - apache 2.4.27
+
+* code analysis
+#+BEGIN_SRC java
+url = new URL(requestURL);
+HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+conn.setReadTimeout(15000);
+conn.setConnectTimeout(15000);
+conn.setRequestMethod("POST");
+conn.setDoInput(true);
+conn.setDoOutput(true);
+
+OutputStream os = conn.getOutputStream();
+
+BufferedWriter writer = new BufferedWriter(
+           new OutputStreamWriter(os, "UTF-8"));
+writer.write(getPostDataString(postDataParams));
+
+writer.flush();
+writer.close();
+os.close();
+
+int responseCode = conn.getResponseCode();
+#+END_SRC
+
+And I got 403 from
+#+BEGIN_SRC java
+int responseCode = conn.getResponseCode();
+#+END_SRC
+
+* fix
+
+in C:\wamp64\bin\apache\apache2.4.27\conf\extra\httpd-vhosts.conf
+
+change
+#+BEGIN_SRC cfg
+require local
+#+END_SRC
+
+to
+#+BEGIN_SRC cfg
+Require all granted
+#+END_SRC
+
+Then restart the server!
