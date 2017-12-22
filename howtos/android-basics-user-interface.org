@@ -1,0 +1,136 @@
+#+title: android-basics: user interface
+#+options: ^:nil
+
+* referenccre
+* create the birthday card app
+** drawing to code
+when you're designing application layouts, there are 3 good steps to follow if
+you're not sure how to get started.
++ step1: select the Views
+  take the layout and select the correct views to use
++ step2: position the Views
+  take those views and position them on the screen, and basically, you do this
+  step by choosing the correct view group and then selecting the correct positioning
+  attributes.
++ step3: style the Views
+  we add all of the stylistic touches in step three. This is where we take the
+  views and add things like color or font related attributes.
+
+** RelativeLayout LinearLayout
+LinearLayouts are great for aligning views in rows or columns.
+They're a good way to divide up one space using layout weights, that will expand
+or shrink views depending on the size of the display.
+
+On the other hand, RelativeLayouts are great for positioning elements relative
+to one another. For example, putting B below A, or putting C in the lower
+left-hand corner. RelativeLayouts also make it easy to overlap views.
+
+** the drawable folder
+For images, there's this folder called drawable. Once you've put the image into
+the drawable foler, you can use the source attribute of an image view, and give
+it the value@drawable and then the name of the image. e.g.
+#+BEGIN_SRC android
+android:source="@drawable/a.jpg"
+#+END_SRC
+
+** positioning
+orientation, and layout_weight attributes belong to LinearLayout.
+use
+#+BEGIN_SRC android
+android:layout_alignParentEnd="true"
+android:layout_alignParentBottom="true"
+#+END_SRC
+
+to put the TextView to the right bottom corner.
+** styling
++ text is much larger
++ text font is different
++ text is white
++ iamge expanded to fill screen
++ text is not pushed against side of screen
+
+*** make the text larger
+use attribute `textSize' to make the text larger. Then change the text
+to be 36sp for both TextViews.
+
+*** setting the font
+use attribute *fontFamily* to change the text font. Then change the text
+font to *sans-serif-light* for both TextViews.
+
+Attribute fontFamily is only used in API level 16 and higher.
+
+*** setting the color
+use attribute *textColor* to change the text color. Then change the color
+to *@android:Color/white* for both TextViews.
+
+we use *@android:Color* to get access to the standard Android colors, and then
+*/white* specifies that we're looking to use Android's white color. If you want
+to specific color, ist's a lot easier to use a hex code. A good resource for hex
+codes is the material design color web page from the Android developer website.
+https://material.io/guidelines/style/color.html?utm_source=udacity&utm_medium=course&utm_campaign=android_basics#
+
+*** attributes for the ImageView
+use attribute *scaleType* to change to expand the image, but it needs to work in
+conjuncture with the view's boundaries to fill the entire background.
+
+*ScaleType* will change the size of the image within the view box that surrounds it.
+While *layout_width* and *layout_height* will actually change the size of that
+view box.
+
+Because we are trying to get the view to expand to the entire screen, it would
+probably be good to set these explicitly as match parent.
+
+*** how to style the image
+expand the image to fill the screen. Hints:
++ we know of two values for *scaleType*, *center* and *centerCrop*.
++ Does your image expand but your text disappear?
+  Try changing the order of your views.
+
+Now *center* doesn't actually scale the image, it doesn't change the size of the
+image. So it makes it a pretty straightforward that I need to use centerCrop.
+
+About *centerCrop* the documentation says:
+#+BEGIN_QUOTE
+Scale image uniformly (maintain the image's aspect ratio) so that both dimensions
+(width and height) of the image will e equal to or larger than the correspondinng
+dimension of the image view (minus padding).
+#+END_QUOTE
+
+If you've ever tried to scale an image, scaling uniformly means that it keeps the
+image from getting stretched out either horizontally or vertically.
+
+If the *centerCrop* expands over the edge of the phone, it will center this image
+in the view, and then as the name implies, it'll crop off the excess parts of the
+image.
+
+Views can overlap each other much like playing cards can overlap each other. And
+the order of these view tags here determines the order that the views get placed
+on the screen.
+#+BEGIN_QUOTE
+<RelativeLayout>
+  <A>
+  <B>
+  <C>
+</RelativeLayout>
+#+END_QUOTE
+
+So since view A is first, it would get placed on the screen first, followed by
+view B, and then view C.
+*** minor adjustments
+use attributes *layout_margin* to change to make room between the side of the
+phone screen and the text. Make this space 20dp on all sides.
+
+margin adds space around views and padding adds space within views.
+** make your own card
+Explaining and communicating your design is not only an important skill for a
+burgeoning app developer, such as yourself, but it will also really help solidify
+the concepts you're practicing.
+
+Think of Android development as a new skill in your tool kit that you can use
+to solve problems in your own community.
+
+Whether you're a social good app or just an app, try to create value versus hype.
+Try to create an app that makes people happ, that makes people healthy, that
+improves life somehow.
+
+To do something you love. It's the thrill of a lifetime, you should do it.
